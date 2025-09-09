@@ -25,7 +25,7 @@ public class JobController {
     @Autowired
     private UsersRepository userRepository;
 
-    @PostMapping()
+    @PostMapping
     @PreAuthorize("hasRole('Employer')")
     public ResponseEntity<JobsDto> createJob(@RequestBody JobsDto jobDto, Authentication authentication) throws Exception {
         Users currentUser = getCurrentUser(authentication);

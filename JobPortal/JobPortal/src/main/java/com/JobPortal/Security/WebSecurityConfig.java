@@ -27,8 +27,7 @@ public class WebSecurityConfig {
             .sessionManagement(session ->
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/api/users/register").permitAll()
+                    .requestMatchers("/auth/**", "/api/users/register", "/api/applications/apply-from-referral").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/jobs", "/api/jobs/**").permitAll()
                     .anyRequest().authenticated()
             )

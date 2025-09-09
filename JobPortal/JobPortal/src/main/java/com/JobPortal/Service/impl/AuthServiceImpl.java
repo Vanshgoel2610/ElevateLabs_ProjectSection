@@ -50,6 +50,7 @@ public class AuthServiceImpl implements AuthService {
                 .username(signupRequestDto.getUsername())
                 .password(passwordEncoder.encode(signupRequestDto.getPassword()))
                 .role(roles)
+                .email(signupRequestDto.getEmail())
                 .build();
         usersRepository.save(newUser);
 
@@ -65,6 +66,7 @@ public class AuthServiceImpl implements AuthService {
                 .username(signupRequestDto.getUsername())
                 .password(passwordEncoder.encode(signupRequestDto.getPassword()))
                 .role(roles)
+                .email(signupRequestDto.getEmail())
                 .build();
         usersRepository.save(newUser);
 

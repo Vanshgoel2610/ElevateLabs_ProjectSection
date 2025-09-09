@@ -17,4 +17,5 @@ public class SignupRequestDto {
     private String username;
     private String password;
     private Set<Role> roles = new HashSet<>();
+    private String email;
 }

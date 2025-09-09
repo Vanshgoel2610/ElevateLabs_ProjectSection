@@ -3,6 +3,7 @@ package com.JobPortal.Controller;
 import com.JobPortal.Entity.UpdateStatusRequest;
 import com.JobPortal.Entity.Users;
 import com.JobPortal.Entity.dto.ApplicationDto;
+import com.JobPortal.Entity.dto.ReferralRequestDto;
 import com.JobPortal.Repository.UsersRepository;
 import com.JobPortal.Service.ApplicationService;
 import lombok.RequiredArgsConstructor;
@@ -61,11 +62,22 @@ public class ApplicationController {
         return ResponseEntity.ok(updatedApplication);
     }
 
-    // TODO: A controller for giving referral using mail schedular
-
     private Users getCurrentUser(Authentication authentication) {
         String username = authentication.getName();
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+    }
+
+    @PostMapping("/refer")
+    @PreAuthorize("hasRole('Employer')")
+    public ResponseEntity<String> referCandidate(@RequestBody ReferralRequestDto referralRequest, Authentication authentication) {
+        Users currentUser = getCurrentUser(authentication);
+        String referralLink = applicationService.createReferral(referralRequest, currentUser.getId());
+        return ResponseEntity.ok("Referral link created: " + referralLink);
+    }
+    @GetMapping("/apply-from-referral")
+    public ResponseEntity<ApplicationDto> applyFromReferralLink(@RequestParam String token) {
+        ApplicationDto newApplication = applicationService.applyFromReferral(token);
+        return ResponseEntity.ok(newApplication);
     }
 }

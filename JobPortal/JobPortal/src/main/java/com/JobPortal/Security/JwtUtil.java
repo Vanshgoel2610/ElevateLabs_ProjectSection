@@ -38,4 +38,22 @@ public class JwtUtil {
                 .getPayload();
         return claims.getSubject();
     }
+
+    public String generateReferralToken(Long jobId, String applicantEmail) {
+        return Jwts.builder()
+                .subject(applicantEmail) // The subject is the applicant's email
+                .claim("jobId", jobId.toString())
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + 24L * 60 * 60 * 1000 * 30))   // 1 month expiry of the link
+                .signWith(getSecretKey())
+                .compact();
+    }
+
+    public Claims getClaimsFromToken(String token) {
+        return Jwts.parser()
+                .verifyWith(getSecretKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
 }

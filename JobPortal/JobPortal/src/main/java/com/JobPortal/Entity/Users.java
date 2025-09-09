@@ -33,6 +33,7 @@ public class Users implements UserDetails {
     private Set<Role> role = new HashSet<>();
     @OneToMany(mappedBy = "employer")
     private List<Jobs> jobs;
+    private String email;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
