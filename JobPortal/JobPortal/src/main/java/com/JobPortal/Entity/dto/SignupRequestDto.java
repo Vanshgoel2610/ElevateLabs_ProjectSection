@@ -1,13 +1,20 @@
 package com.JobPortal.Entity.dto;
 
+import com.JobPortal.Entity.type.Role;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequestDto {
+public class SignupRequestDto {
     private String username;
     private String password;
+    private Set<Role> roles = new HashSet<>();
 }

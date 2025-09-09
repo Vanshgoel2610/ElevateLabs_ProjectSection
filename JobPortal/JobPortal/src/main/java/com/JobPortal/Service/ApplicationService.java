@@ -2,7 +2,6 @@ package com.JobPortal.Service;
 
 import com.JobPortal.Entity.UpdateStatusRequest;
 import com.JobPortal.Entity.dto.ApplicationDto;
-import com.JobPortal.Entity.type.Status;
 
 import java.util.List;
 

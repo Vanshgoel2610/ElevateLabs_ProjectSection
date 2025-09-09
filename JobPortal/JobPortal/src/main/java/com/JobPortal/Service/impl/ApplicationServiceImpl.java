@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-//import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.AccessDeniedException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,12 +54,12 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public List<ApplicationDto> getApplicationsForJob(Long jobId, Long employerId) {
-//        Jobs job = jobRepository.findById(jobId)
-//                .orElseThrow(() -> new EntityNotFoundException("Job not found with id: " + jobId));
+        Jobs job = jobRepository.findById(jobId)
+                .orElseThrow(() -> new EntityNotFoundException("Job not found with id: " + jobId));
 
-//        if (!job.getEmployer().getId().equals(employerId)) {
-//            throw new AccessDeniedException("You are not authorized to view applications for this job.");
-//        }
+        if (!job.getEmployer().getId().equals(employerId)) {
+            throw new AccessDeniedException("You are not authorized to view applications for this job.");
+        }
 
         List<Applications> applications = applicationRepository.findByJob_Id(jobId);
         return applications.stream()
@@ -84,9 +84,9 @@ public class ApplicationServiceImpl implements ApplicationService {
         Applications application = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new EntityNotFoundException("Application not found with id: " + applicationId));
 
-//        if (!application.getJob().getEmployer().getId().equals(employerId)) {
-//            throw new AccessDeniedException("You are not authorized to update this application.");
-//        }
+        if (!application.getJob().getEmployer().getId().equals(employerId)) {
+            throw new AccessDeniedException("You are not authorized to update this application.");
+        }
 
         application.setStatus(newStatus.getStatus());
         Applications updatedApplication = applicationRepository.save(application);
